@@ -1,4 +1,4 @@
-# Handpan 1.4
+# Handpan 1.5
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -52,7 +52,7 @@ To get a desktop shortcut: right-click `launch.vbs` → **Send to → Desktop (c
 
 ## Install (Android)
 
-Download `Handpan-1.4.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-1.5.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -70,6 +70,11 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 1.5
+
+- **Learn songs:** pick a song in the bar under the scale name. **▶ Listen** plays it while the fields light up; **🎯 Practice** lights the next field in **red** (the one after that has a dashed outline) and waits until you hit it, with the matching key outlined on the keyboard map. Mistakes are counted.
+- Songs: Twinkle Twinkle Little Star, Ode to Joy, Mary Had a Little Lamb, Jingle Bells, Frère Jacques and When the Saints Go Marching In (all public domain). A song is shifted to fit the current scale; if it can't fit, the app switches to a scale where it does.
 
 ## What's new in 1.4
 
