@@ -3,7 +3,7 @@ Set sh = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 dir = fso.GetParentFolderName(WScript.ScriptFullName)
 
-url = "file:///" & Replace(Replace(dir & "\index.html", "\", "/"), " ", "%20")
+url = "file:///" & Replace(Replace(dir & "\index.html", "\", "/"), " ", "%20") & "?v=1.4"
 edge = sh.ExpandEnvironmentStrings("%ProgramFiles(x86)%") & "\Microsoft\Edge\Application\msedge.exe"
 If Not fso.FileExists(edge) Then edge = sh.ExpandEnvironmentStrings("%ProgramFiles%") & "\Microsoft\Edge\Application\msedge.exe"
 If fso.FileExists(edge) Then

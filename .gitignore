@@ -1,0 +1,6 @@
+android/build/
+android/out/
+android/assets/
+android/data/
+android/res/mipmap-*/
+backup-*/

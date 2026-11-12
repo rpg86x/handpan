@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nl.handpan.app"
+    android:versionCode="14"
+    android:versionName="1.4">
+
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
+    <!-- Alleen voor de koffielink in de voettekst -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="Handpan"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme"
+        android:allowBackup="false">
+
+        <!-- configChanges: draaien van het scherm laadt de app niet opnieuw, dus de klank loopt door -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
