@@ -1,4 +1,4 @@
-# Handpan 1.5
+# Handpan 1.6
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -52,7 +52,7 @@ To get a desktop shortcut: right-click `launch.vbs` → **Send to → Desktop (c
 
 ## Install (Android)
 
-Download `Handpan-1.5.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-1.6.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -70,6 +70,12 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 1.6
+
+- **16 songs in three series:** Children's songs (Twinkle Twinkle, Mary Had a Little Lamb, Frère Jacques, Row Row Row Your Boat, London Bridge, Old MacDonald, Jingle Bells), Classics & folk (Ode to Joy, When the Saints, Oh! Susanna, Amazing Grace, Kumbaya) and a new **Reggae style** series.
+- The reggae series contains original tunes written for this app in a reggae feel (offbeat phrasing, minor pentatonic, relaxed tempo): Island Breeze, Offbeat Sunrise, Hammock Groove and Riddim Walk. Listen plays them with a soft rim tap on every offbeat.
+- Each song has its own tempo, and songs can contain rests.
 
 ## What's new in 1.5
 

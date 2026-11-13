@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handpan 1.5</title>
+<title>Handpan 1.6</title>
 <link rel="icon" href="logo.png">
 <style>
   :root {
@@ -136,7 +136,7 @@
 </head>
 <body>
 <header>
-  <h1>Handpan 1.5</h1>
+  <h1>Handpan 1.6</h1>
   <button class="nav" id="prev">‹</button>
   <div id="scale"><div id="scaleName"></div><div id="scaleNotes"></div></div>
   <button class="nav" id="next">›</button>
@@ -175,7 +175,7 @@
   <details id="studio"><summary id="studioTitle"></summary><div id="studioBody"></div></details>
   <footer>
     <span data-t="keys"></span>
-    <span>Handpan 1.5</span>
+    <span>Handpan 1.6</span>
   </footer>
 </div></div>
 
@@ -208,7 +208,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Reverb', soft: 'soft', space: 'space', prevShort: 'previous', nextShort: 'next',
     perc: { gu: 'Gu (bass)', tak: 'Tak (rim)', slap: 'Slap' },
     keys: KEYS('Middle row = tones low → high', 'top row = soft', 'space = ding', 'scale', 'keyboard'),
-    donate: '☕ Buy me a coffee', donateShort: 'Buy me a coffee', recorder: { rec: 'Record', resume: 'Resume recording', pause: 'Pause', stop: 'Stop', play: 'Play recording', save: 'Save recording' }, song: { listen: '▶ Listen', practice: '🎯 Practice', stop: 'Stop song', note: 'Note', of: 'of', done: 'Well done! Mistakes:', miss: 'Not that one: follow the red field', switched: 'Switched scale to', pick: 'Pick a song, then Listen or Practice', names: ['Twinkle Twinkle Little Star', 'Ode to Joy', 'Mary Had a Little Lamb', 'Jingle Bells', 'Frère Jacques', 'When the Saints Go Marching In'] }, more: 'More languages',
+    donate: '☕ Buy me a coffee', donateShort: 'Buy me a coffee', recorder: { rec: 'Record', resume: 'Resume recording', pause: 'Pause', stop: 'Stop', play: 'Play recording', save: 'Save recording' }, song: { listen: '▶ Listen', practice: '🎯 Practice', stop: 'Stop song', note: 'Note', of: 'of', done: 'Well done! Mistakes:', miss: 'Not that one: follow the red field', switched: 'Switched scale to', pick: 'Pick a song, then Listen or Practice', cats: { kids: 'Children\'s songs', folk: 'Classics & folk', reggae: 'Reggae style (originals)' }, names: { twinkle: 'Twinkle Twinkle Little Star', mary: 'Mary Had a Little Lamb', frere: 'Frère Jacques', row: 'Row, Row, Row Your Boat', london: 'London Bridge Is Falling Down', mac: 'Old MacDonald Had a Farm', jingle: 'Jingle Bells', ode: 'Ode to Joy', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Island Breeze', sunrise: 'Offbeat Sunrise', hammock: 'Hammock Groove', riddim: 'Riddim Walk' } }, more: 'More languages',
     scales: ['D Kurd', 'D Celtic Minor', 'F Low Pygmy', 'D Hijaz', 'C Major'],
     moods: ['The classic: warm and melancholic', 'Gentle and storytelling', 'Deep, rhythmic with an African touch', 'Eastern and mysterious', 'Light and cheerful'],
   },
@@ -217,7 +217,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Galm', soft: 'zacht', space: 'spatie', prevShort: 'vorige', nextShort: 'volgende',
     perc: { gu: 'Gu (bas)', tak: 'Tak (rand)', slap: 'Slap' },
     keys: KEYS('Middelste rij = tonen laag → hoog', 'bovenste rij = zacht', 'spatie = ding', 'toonladder', 'toetsenbord'),
-    donate: '☕ Trakteer me op een koffie', donateShort: 'Trakteer me op een koffie', recorder: { rec: 'Opnemen', resume: 'Opname hervatten', pause: 'Pauze', stop: 'Stop', play: 'Opname afspelen', save: 'Opname bewaren' }, song: { listen: '▶ Voorspelen', practice: '🎯 Oefenen', stop: 'Liedje stoppen', note: 'Noot', of: 'van', done: 'Goed gedaan! Fouten:', miss: 'Niet die: volg het rode vlak', switched: 'Toonladder gewisseld naar', pick: 'Kies een liedje en druk op Voorspelen of Oefenen', names: ['Altijd is Kortjakje ziek', 'Ode an die Freude', 'Mary Had a Little Lamb', 'Jingle Bells', 'Vader Jacob', 'When the Saints Go Marching In'] }, more: 'Meer talen',
+    donate: '☕ Trakteer me op een koffie', donateShort: 'Trakteer me op een koffie', recorder: { rec: 'Opnemen', resume: 'Opname hervatten', pause: 'Pauze', stop: 'Stop', play: 'Opname afspelen', save: 'Opname bewaren' }, song: { listen: '▶ Voorspelen', practice: '🎯 Oefenen', stop: 'Liedje stoppen', note: 'Noot', of: 'van', done: 'Goed gedaan! Fouten:', miss: 'Niet die: volg het rode vlak', switched: 'Toonladder gewisseld naar', pick: 'Kies een liedje en druk op Voorspelen of Oefenen', cats: { kids: 'Kinderliedjes', folk: 'Klassiek & folk', reggae: 'Reggae-stijl (eigen nummers)' }, names: { twinkle: 'Altijd is Kortjakje ziek', mary: 'Mary Had a Little Lamb', frere: 'Vader Jacob', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Old MacDonald Had a Farm', jingle: 'Jingle Bells', ode: 'Ode an die Freude', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Eilandbries', sunrise: 'Offbeat Zonsopgang', hammock: 'Hangmat Groove', riddim: 'Riddim Wandeling' } }, more: 'Meer talen',
     scales: ['D Kurd', 'D Celtic mineur', 'F Low Pygmy', 'D Hijaz', 'C Majeur'],
     moods: ['De klassieker: warm en melancholisch', 'Zacht en verhalend', 'Diep, ritmisch en Afrikaans getint', 'Oosters en mysterieus', 'Licht en vrolijk'],
   },
@@ -226,7 +226,7 @@ const LANGS = {
     volume: 'Lautstärke', reverb: 'Hall', soft: 'leise', space: 'Leertaste', prevShort: 'zurück', nextShort: 'weiter',
     perc: { gu: 'Gu (Bass)', tak: 'Tak (Rand)', slap: 'Slap' },
     keys: KEYS('Mittlere Reihe = Töne tief → hoch', 'obere Reihe = leise', 'Leertaste = Ding', 'Tonleiter', 'Tastatur'),
-    donate: '☕ Spendier mir einen Kaffee', donateShort: 'Spendier mir einen Kaffee', recorder: { rec: 'Aufnehmen', resume: 'Aufnahme fortsetzen', pause: 'Pause', stop: 'Stopp', play: 'Aufnahme abspielen', save: 'Aufnahme speichern' }, song: { listen: '▶ Vorspielen', practice: '🎯 Üben', stop: 'Lied stoppen', note: 'Note', of: 'von', done: 'Gut gemacht! Fehler:', miss: 'Nicht diese: folge dem roten Feld', switched: 'Tonleiter gewechselt zu', pick: 'Wähle ein Lied, dann Vorspielen oder Üben', names: ['Morgen kommt der Weihnachtsmann', 'Ode an die Freude', 'Mary Had a Little Lamb', 'Jingle Bells', 'Bruder Jakob', 'When the Saints Go Marching In'] }, more: 'Weitere Sprachen',
+    donate: '☕ Spendier mir einen Kaffee', donateShort: 'Spendier mir einen Kaffee', recorder: { rec: 'Aufnehmen', resume: 'Aufnahme fortsetzen', pause: 'Pause', stop: 'Stopp', play: 'Aufnahme abspielen', save: 'Aufnahme speichern' }, song: { listen: '▶ Vorspielen', practice: '🎯 Üben', stop: 'Lied stoppen', note: 'Note', of: 'von', done: 'Gut gemacht! Fehler:', miss: 'Nicht diese: folge dem roten Feld', switched: 'Tonleiter gewechselt zu', pick: 'Wähle ein Lied, dann Vorspielen oder Üben', cats: { kids: 'Kinderlieder', folk: 'Klassik & Folk', reggae: 'Reggae-Stil (eigene Stücke)' }, names: { twinkle: 'Morgen kommt der Weihnachtsmann', mary: 'Mary Had a Little Lamb', frere: 'Bruder Jakob', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Old MacDonald hat ’ne Farm', jingle: 'Jingle Bells', ode: 'Ode an die Freude', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Inselbrise', sunrise: 'Offbeat-Sonnenaufgang', hammock: 'Hängematten-Groove', riddim: 'Riddim-Spaziergang' } }, more: 'Weitere Sprachen',
     scales: ['D Kurd', 'D Keltisch Moll', 'F Low Pygmy', 'D Hijaz', 'C Dur'],
     moods: ['Der Klassiker: warm und melancholisch', 'Sanft und erzählend', 'Tief, rhythmisch, afrikanisch angehaucht', 'Orientalisch und geheimnisvoll', 'Leicht und fröhlich'],
   },
@@ -235,7 +235,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Réverb', soft: 'doux', space: 'espace', prevShort: 'précédente', nextShort: 'suivante',
     perc: { gu: 'Gu (basse)', tak: 'Tak (bord)', slap: 'Slap' },
     keys: KEYS('Rangée du milieu = notes grave → aigu', 'rangée du haut = doux', 'espace = ding', 'gamme', 'clavier'),
-    donate: '☕ Offrez-moi un café', donateShort: 'Offrez-moi un café', recorder: { rec: 'Enregistrer', resume: 'Reprendre', pause: 'Pause', stop: 'Arrêt', play: 'Écouter', save: 'Sauvegarder' }, song: { listen: '▶ Écouter', practice: '🎯 S\'exercer', stop: 'Arrêter', note: 'Note', of: 'sur', done: 'Bravo ! Erreurs :', miss: 'Pas celle-là : suivez la zone rouge', switched: 'Gamme changée :', pick: 'Choisissez une chanson, puis Écouter ou S\'exercer', names: ['Ah ! vous dirai-je, maman', 'Ode à la joie', 'Mary Had a Little Lamb', 'Vive le vent', 'Frère Jacques', 'When the Saints Go Marching In'] }, more: 'Autres langues',
+    donate: '☕ Offrez-moi un café', donateShort: 'Offrez-moi un café', recorder: { rec: 'Enregistrer', resume: 'Reprendre', pause: 'Pause', stop: 'Arrêt', play: 'Écouter', save: 'Sauvegarder' }, song: { listen: '▶ Écouter', practice: '🎯 S\'exercer', stop: 'Arrêter', note: 'Note', of: 'sur', done: 'Bravo ! Erreurs :', miss: 'Pas celle-là : suivez la zone rouge', switched: 'Gamme changée :', pick: 'Choisissez une chanson, puis Écouter ou S\'exercer', cats: { kids: 'Comptines', folk: 'Classiques & folk', reggae: 'Style reggae (compositions)' }, names: { twinkle: 'Ah ! vous dirai-je, maman', mary: 'Mary Had a Little Lamb', frere: 'Frère Jacques', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Dans la ferme de Mathurin', jingle: 'Vive le vent', ode: 'Ode à la joie', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Brise des îles', sunrise: 'Lever de soleil offbeat', hammock: 'Groove du hamac', riddim: 'Balade riddim' } }, more: 'Autres langues',
     scales: ['D Kurd', 'D Celtique mineur', 'F Low Pygmy', 'D Hijaz', 'C Majeur'],
     moods: ['Le classique : chaleureux et mélancolique', 'Doux et narratif', 'Profond, rythmé, aux accents africains', 'Oriental et mystérieux', 'Léger et joyeux'],
   },
@@ -244,7 +244,7 @@ const LANGS = {
     volume: 'Volumen', reverb: 'Reverb', soft: 'suave', space: 'espacio', prevShort: 'anterior', nextShort: 'siguiente',
     perc: { gu: 'Gu (bajo)', tak: 'Tak (borde)', slap: 'Slap' },
     keys: KEYS('Fila central = notas grave → agudo', 'fila superior = suave', 'espacio = ding', 'escala', 'teclado'),
-    donate: '☕ Invítame a un café', donateShort: 'Invítame a un café', recorder: { rec: 'Grabar', resume: 'Reanudar', pause: 'Pausa', stop: 'Detener', play: 'Reproducir', save: 'Guardar' }, song: { listen: '▶ Escuchar', practice: '🎯 Practicar', stop: 'Detener', note: 'Nota', of: 'de', done: '¡Muy bien! Errores:', miss: 'Esa no: sigue la zona roja', switched: 'Escala cambiada a', pick: 'Elige una canción y pulsa Escuchar o Practicar', names: ['Estrellita, ¿dónde estás?', 'Himno de la alegría', 'Mary Had a Little Lamb', 'Jingle Bells', 'Martinillo', 'When the Saints Go Marching In'] }, more: 'Más idiomas',
+    donate: '☕ Invítame a un café', donateShort: 'Invítame a un café', recorder: { rec: 'Grabar', resume: 'Reanudar', pause: 'Pausa', stop: 'Detener', play: 'Reproducir', save: 'Guardar' }, song: { listen: '▶ Escuchar', practice: '🎯 Practicar', stop: 'Detener', note: 'Nota', of: 'de', done: '¡Muy bien! Errores:', miss: 'Esa no: sigue la zona roja', switched: 'Escala cambiada a', pick: 'Elige una canción y pulsa Escuchar o Practicar', cats: { kids: 'Canciones infantiles', folk: 'Clásicos y folk', reggae: 'Estilo reggae (originales)' }, names: { twinkle: 'Estrellita, ¿dónde estás?', mary: 'Mary Had a Little Lamb', frere: 'Martinillo', row: 'Rema, rema, rema tu bote', london: 'El puente de Londres', mac: 'En la granja de mi tío', jingle: 'Jingle Bells', ode: 'Himno de la alegría', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbayá', breeze: 'Brisa de la isla', sunrise: 'Amanecer offbeat', hammock: 'Groove de hamaca', riddim: 'Paseo riddim' } }, more: 'Más idiomas',
     scales: ['D Kurd', 'D Celta menor', 'F Low Pygmy', 'D Hijaz', 'C Mayor'],
     moods: ['El clásico: cálido y melancólico', 'Suave y narrativo', 'Profundo, rítmico, con aire africano', 'Oriental y misterioso', 'Ligero y alegre'],
   },
@@ -568,15 +568,31 @@ function applyLang() {
   recUpdate();
 }
 // ---------- Liedjes leren ----------
-// Melodieën (allemaal publiek domein) in C; noot:tellen. Ze worden verschoven naar de toonladder waarin ze passen.
-const SONGS = [
-  'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2',
-  'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:.5 D4:2 E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 D4:1.5 C4:.5 C4:2',
-  'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4',
-  'E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 E4 D4 D4 E4 D4:2 G4:2 E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 G4 G4 F4 D4 C4:4',
-  'C4 D4 E4 C4 C4 D4 E4 C4 E4 F4 G4:2 E4 F4 G4:2 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 C4 G3 C4:2 C4 G3 C4:2',
-  'C4 E4 F4 G4:4 C4 E4 F4 G4:4 C4 E4 F4 G4:2 E4:2 C4:2 E4:2 D4:4 E4 E4 D4 C4:3 C4 E4:2 G4:2 G4 F4:3 E4 F4 G4:2 E4:2 C4:2 D4:2 C4:4',
-].map(str => str.split(' ').map(tok => { const [n, d] = tok.split(':'); return { n, beats: d ? +d : 1 }; }));
+// Melodieën in C; noot:tellen, R = rust. Publiek domein, behalve de reggae-serie: eigen composities in reggaestijl.
+// Een liedje is de lijst noten zonder rusten (om te oefenen), met .items (incl. rusten), .bpm, .cat en .id voor het voorspelen.
+const SONG_DATA = [
+  ['twinkle', 'kids', 100, 'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2'],
+  ['mary', 'kids', 100, 'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4'],
+  ['frere', 'kids', 100, 'C4 D4 E4 C4 C4 D4 E4 C4 E4 F4 G4:2 E4 F4 G4:2 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 C4 G3 C4:2 C4 G3 C4:2'],
+  ['row', 'kids', 100, 'C4:1.5 C4:1.5 C4 D4:.5 E4:1.5 E4 D4:.5 E4 F4:.5 G4:3 C5:.5 C5:.5 C5:.5 G4:.5 G4:.5 G4:.5 E4:.5 E4:.5 E4:.5 C4:.5 C4:.5 C4:.5 G4 F4:.5 E4 D4:.5 C4:3'],
+  ['london', 'kids', 100, 'G4:1.5 A4:.5 G4 F4 E4 F4 G4:2 D4 E4 F4:2 E4 F4 G4:2 G4:1.5 A4:.5 G4 F4 E4 F4 G4:2 D4:2 G4:2 E4 C4:3'],
+  ['mac', 'kids', 110, 'C4 C4 C4 G3 A3 A3 G3:2 E4 E4 D4 D4 C4:3 G3 C4 C4 C4 G3 A3 A3 G3:2 E4 E4 D4 D4 C4:4'],
+  ['jingle', 'kids', 110, 'E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 E4 D4 D4 E4 D4:2 G4:2 E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 G4 G4 F4 D4 C4:4'],
+  ['ode', 'folk', 100, 'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:.5 D4:2 E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 D4:1.5 C4:.5 C4:2'],
+  ['saints', 'folk', 110, 'C4 E4 F4 G4:4 C4 E4 F4 G4:4 C4 E4 F4 G4:2 E4:2 C4:2 E4:2 D4:4 E4 E4 D4 C4:3 C4 E4:2 G4:2 G4 F4:3 E4 F4 G4:2 E4:2 C4:2 D4:2 C4:4'],
+  ['susanna', 'folk', 110, 'C4:.5 D4:.5 E4 G4 G4:1.5 A4:.5 G4 E4 C4:1.5 D4:.5 E4 E4 D4 C4 D4:3 C4:.5 D4:.5 E4 G4 G4:1.5 A4:.5 G4 E4 C4:1.5 D4:.5 E4 E4 D4 D4 C4:3'],
+  ['grace', 'folk', 80, 'G3 C4:2 E4:.5 C4:.5 E4:2 D4 C4:2 A3 G3:2 G3 C4:2 E4:.5 C4:.5 E4:2 D4 G4:3 E4:.5 G4:.5 E4:2 C4 G3:2 A3 C4:1.5 A3:.5 G3:2 G3 C4:2 E4:.5 C4:.5 E4:2 D4 C4:3'],
+  ['kumbaya', 'folk', 90, 'C4 E4 G4:2 G4 G4 A4 A4 G4:2 C4 E4 G4:2 G4 G4 F4 E4 D4:2 C4 E4 G4:2 G4 G4 A4 A4 G4:2 F4 E4 D4 D4 C4:3'],
+  ['breeze', 'reggae', 80, 'R:.5 A3:.5 C4:.5 D4:.5 E4 R:.5 E4:.5 D4:.5 C4:.5 A3:1.5 R:.5 R:.5 A3:.5 C4:.5 D4:.5 E4:.5 G4 E4:.5 D4:2 R:.5 E4:.5 G4:.5 A4:.5 G4 E4:.5 D4:.5 C4 D4:.5 C4:.5 A3:2'],
+  ['sunrise', 'reggae', 84, 'R:.5 C4:.5 R:.5 E4:.5 R:.5 G4:.5 R:.5 A4:.5 G4 E4 D4:2 R:.5 D4:.5 R:.5 E4:.5 R:.5 G4:.5 E4:.5 D4:.5 C4:2 R:.5 C4:.5 R:.5 E4:.5 R:.5 G4:.5 R:.5 A4:.5 C5 A4 G4:2 E4:.5 G4:.5 E4:.5 D4:.5 C4:3'],
+  ['hammock', 'reggae', 72, 'A3 R:.5 C4:.5 E4 R:.5 D4:.5 C4:.5 D4:.5 E4 C4:2 A3 R:.5 C4:.5 E4 R:.5 F4:.5 E4:.5 D4:.5 C4 D4:2 E4:.5 F4:.5 G4 F4:.5 E4:.5 D4 C4:.5 D4:.5 E4 C4 A3:3'],
+  ['riddim', 'reggae', 88, 'R:.5 E4:.5 E4:.5 D4:.5 C4 R:.5 C4:.5 D4:.5 E4:.5 G4 E4:2 R:.5 A4:.5 G4:.5 E4:.5 D4 R:.5 C4:.5 D4:.5 E4:.5 D4:2 R:.5 E4:.5 E4:.5 D4:.5 C4 R:.5 A3:.5 C4:.5 D4:.5 E4 G4:.5 E4:.5 D4:.5 C4:.5 A3:3'],
+];
+const SONGS = SONG_DATA.map(([id, cat, bpm, str]) => {
+  const items = str.split(' ').map(tok => { const [n, d] = tok.split(':'); return { n, rest: n === 'R', beats: d ? +d : 1 }; });
+  return Object.assign(items.filter(x => !x.rest), { id, cat, bpm, items });
+});
+const SONG_CATS = ['kids', 'folk', 'reggae'];
 const midiOf = (n) => Math.round(69 + 12 * Math.log2(freq(n) / 440));
 // Waar ligt een toonhoogte op de huidige handpan? -1 = ding, 0..8 = toonveld, null = niet aanwezig
 function slotFor(midi, sc) {
@@ -664,16 +680,22 @@ function songListen() {
   if (note === false) return;
   songState.mode = 'listen';
   songMark(); songButtons(); songProgress(note);
-  const beat = 60 / 96 * 1000;
-  let at = 300;
-  songState.song.forEach((x, i) => {
-    songState.timers.push(setTimeout(() => {
-      songState.pos = i; songMark(); songProgress();
-      const slot = songState.slots[i];
-      if (slot === -1) baseDing(.8); else baseTone(slot, .8);
-    }, at));
+  const song = songState.song, beat = 60 / song.bpm * 1000;
+  let at = 300, i = 0;
+  song.items.forEach((x) => {
+    if (!x.rest) {
+      const k = i++;
+      songState.timers.push(setTimeout(() => {
+        songState.pos = k; songMark(); songProgress();
+        const slot = songState.slots[k];
+        if (slot === -1) baseDing(.8); else baseTone(slot, .8);
+      }, at));
+    }
     at += x.beats * beat;
   });
+  if (song.cat === 'reggae') {
+    for (let b = 0; b < at - 300; b += beat) songState.timers.push(setTimeout(() => perc('tak'), 300 + b + beat / 2));
+  }
   songState.timers.push(setTimeout(() => { songStop(true); songStatus(st().pick); }, at + 400));
 }
 // Elke aanslag (toets, vinger of muis) komt hier langs tijdens het oefenen
@@ -723,7 +745,12 @@ setScale = function (step) {
 function songLabels() {
   const sel = songEl('songSel'), v = sel.value || store.get('song', 0);
   sel.innerHTML = '';
-  st().names.forEach((n, i) => sel.add(new Option('🎵 ' + n, i)));
+  SONG_CATS.forEach(cat => {
+    const g = document.createElement('optgroup');
+    g.label = st().cats[cat];
+    SONGS.forEach((sg, i) => { if (sg.cat === cat) g.appendChild(new Option('🎵 ' + st().names[sg.id], i)); });
+    sel.appendChild(g);
+  });
   sel.value = v;
   songButtons();
   if (songState.mode === 'idle') songStatus(st().pick);
@@ -812,6 +839,6 @@ langEl.onchange = () => { lang = langEl.value; store.set('lang', lang); applyLan
 
 applyLang();
 </script>
-<script src="studio.js?v=1.5"></script>
+<script src="studio.js?v=1.6"></script>
 </body>
 </html>
