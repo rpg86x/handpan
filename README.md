@@ -1,4 +1,4 @@
-# Handpan 1.6
+# Handpan 1.7
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -52,7 +52,7 @@ To get a desktop shortcut: right-click `launch.vbs` → **Send to → Desktop (c
 
 ## Install (Android)
 
-Download `Handpan-1.6.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-1.7.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -70,6 +70,12 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 1.7
+
+- **📚 Library** (second page): browse 36 songs by genre: Children's songs, Classical, Folk & traditional, Country, Reggae style, Hip-hop style, Urban / R&B style and Pop style. Every song card has ▶ Listen and 🎯 Practice. Esc or ← goes back to the handpan.
+- **20 new songs**, including Vivaldi's Spring, Dvořák's Largo, Auld Lang Syne, Camptown Races, Red River Valley, Hot Cross Buns, This Old Man, Itsy Bitsy Spider and Lightly Row.
+- **Style originals** for hip-hop, urban/R&B, pop and country, written for this app (well-known hits are copyrighted). Listen plays each style with its own groove on the handpan's gu, tak and slap.
 
 ## What's new in 1.6
 
