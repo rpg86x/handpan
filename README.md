@@ -1,4 +1,4 @@
-# Handpan 1.7
+# Handpan 1.8
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -15,6 +15,7 @@ Each scale has a ding plus 9 tone fields. Switch scales with `<` and `>`.
 | F Low Pygmy | F3 | A♭3 C4 D♭4 E♭4 F4 G4 A♭4 C5 E♭5 |
 | D Hijaz | D3 | A3 B♭3 C♯4 D4 E4 F4 G4 A4 B♭4 |
 | C Major | C3 | G3 A3 C4 D4 E4 F4 G4 A4 C5 |
+| C Ionian | C3 | G3 A3 B3 C4 D4 E4 F4 G4 A4 |
 
 ## Keyboard
 
@@ -52,7 +53,7 @@ To get a desktop shortcut: right-click `launch.vbs` → **Send to → Desktop (c
 
 ## Install (Android)
 
-Download `Handpan-1.7.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-1.8.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -70,6 +71,13 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 1.8
+
+- **81 songs**, at least 10 in every genre of the library.
+- New classical pieces: Bach's Toccata in D minor (opening), Dies Irae, Beethoven's 5th (motif), Haydn's Surprise Symphony, Wagner's Bridal Chorus, Pachelbel's Canon (theme) and Mozart's Ah vous dirai-je.
+- New folk and country songs: Aura Lee, Simple Gifts, O Christmas Tree, Deck the Halls, Swing Low, Michael Row the Boat Ashore, Home on the Range, Yankee Doodle and Clementine, plus more originals in reggae, hip-hop, urban/R&B, pop and country style.
+- **New scale: C Ionian** (full major scale with B), so melodies that need the leading tone fit too. Songs switch to it automatically when needed.
 
 ## What's new in 1.7
 
