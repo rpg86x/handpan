@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handpan 1.9</title>
+<title>Handpan 2.0</title>
 <link rel="icon" href="logo.png">
 <style>
   :root {
@@ -98,11 +98,12 @@
   .song-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
   .song-card b { font-weight: 500; font-size: 16px; }
   /* Favorieten: gouden ster */
-  #songFav { font-size: 18px !important; padding: 4px 12px !important; }
-  #songFav.on, .song-card .star.on { color: #ffcf5a !important; border-color: #ffcf5a !important; }
-  .song-card { position: relative; }
-  .song-card b { padding-right: 44px; }
-  .song-card .star { position: absolute; top: 10px; right: 10px; font-size: 18px !important; padding: 2px 10px !important; }
+  .rating { display: inline-flex; gap: 1px; }
+  #songBar .rating button, #library .rating button { background: none !important; border: 0 !important; padding: 2px !important; font-size: 20px;
+    line-height: 1; color: rgba(255, 255, 255, .25); border-radius: 4px !important; }
+  #songBar .rating button.on, #library .rating button.on { color: #ffcf5a; }
+  #libChips button.stars { color: #ffcf5a; }
+  #libChips button.stars.on { background: #ffcf5a; color: #2a2000; border-color: #ffcf5a; }
   .song-card.fav { border-color: rgba(255, 207, 90, .45); }
   .song-card span { font-size: 12px; color: var(--muted); }
   .song-card .acts { display: flex; gap: 8px; margin-top: 6px; }
@@ -162,7 +163,7 @@
 </head>
 <body>
 <header>
-  <h1>Handpan 1.9</h1>
+  <h1>Handpan 2.0</h1>
   <button class="nav" id="prev">‹</button>
   <div id="scale"><div id="scaleName"></div><div id="scaleNotes"></div></div>
   <button class="nav" id="next">›</button>
@@ -180,7 +181,7 @@
 <div id="songBar">
   <button id="songLib"></button>
   <select id="songSel"></select>
-  <button id="songFav">☆</button>
+  <span id="songRate" class="rating"></span>
   <button id="songListen"></button>
   <button id="songPractice"></button>
   <button id="songStop">■</button>
@@ -203,7 +204,7 @@
   <details id="studio"><summary id="studioTitle"></summary><div id="studioBody"></div></details>
   <footer>
     <span data-t="keys"></span>
-    <span>Handpan 1.9</span>
+    <span>Handpan 2.0</span>
   </footer>
 </div></div>
 
@@ -224,6 +225,7 @@
 </div>
 <a id="coffeeBtn" class="corner" href="https://urbantechmonk.gumroad.com/coffee" target="_blank" rel="noopener">☕&nbsp;<span data-t="donateShort"></span></a>
 
+<script src="songs.js"></script>
 <script>
 // ---------- Toonladders: ding + 9 tonen, van laag naar hoog ----------
 const SCALES = [
@@ -244,7 +246,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Reverb', soft: 'soft', space: 'space', prevShort: 'previous', nextShort: 'next',
     perc: { gu: 'Gu (bass)', tak: 'Tak (rim)', slap: 'Slap' },
     keys: KEYS('Middle row = tones low → high', 'top row = soft', 'space = ding', 'scale', 'keyboard'),
-    donate: '☕ Buy me a coffee', donateShort: 'Buy me a coffee', recorder: { rec: 'Record', resume: 'Resume recording', pause: 'Pause', stop: 'Stop', play: 'Play recording', save: 'Save recording' }, song: { listen: '▶ Listen', practice: '🎯 Practice', stop: 'Stop song', note: 'Note', of: 'of', done: 'Well done! Mistakes:', miss: 'Not that one: follow the red field', switched: 'Switched scale to', pick: 'Pick a song, then Listen or Practice', cats: { kids: 'Children\'s songs', classical: 'Classical', folk: 'Folk & traditional', country: 'Country', reggae: 'Reggae style', hiphop: 'Hip-hop style', urban: 'Urban / R&B style', pop: 'Pop style' }, lib: { favs: 'Favorites', fav: 'Add to favorites', unfav: 'Remove from favorites', open: '📚 Library', title: 'Library', back: '← Back to the handpan', all: 'All', orig: 'original in this style', pd: 'public domain', note: 'The reggae, hip-hop, urban and pop tracks and some of the country tracks are originals written for this app: well-known hits are copyrighted. Classical, folk, children\'s songs and the other country songs are public domain.' }, names: { twinkle: 'Twinkle Twinkle Little Star', mary: 'Mary Had a Little Lamb', frere: 'Frère Jacques', row: 'Row, Row, Row Your Boat', london: 'London Bridge Is Falling Down', mac: 'Old MacDonald Had a Farm', jingle: 'Jingle Bells', ode: 'Ode to Joy', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Island Breeze', sunrise: 'Offbeat Sunrise', hammock: 'Hammock Groove', riddim: 'Riddim Walk' , hotcross: 'Hot Cross Buns', thisoldman: 'This Old Man', itsy: 'Itsy Bitsy Spider', lightly: 'Lightly Row', spring: 'Vivaldi – Spring', largo: 'Dvořák – Largo (New World)', auld: 'Auld Lang Syne', camptown: 'Camptown Races', redriver: 'Red River Valley', dusty: 'Dusty Road', porch: 'Porch Swing', bap: 'Boom Bap Steps', block: 'Block Party', cypher: 'Late Night Cypher', city: 'City Lights', midnight: 'Midnight Drive', velvet: 'Velvet Groove', summer: 'Summer Days', neon: 'Neon Heart', dance: 'Dance All Night', toccata: 'Bach – Toccata in D minor (opening)', diesirae: 'Dies Irae (Gregorian chant)', fifth: 'Beethoven – Symphony No. 5 (motif)', surprise: 'Haydn – Surprise Symphony', bridal: 'Wagner – Bridal Chorus', canon: 'Pachelbel – Canon (theme)', mozart: 'Mozart – Ah vous dirai-je (theme)', aura: 'Aura Lee', simple: 'Simple Gifts', tannenbaum: 'O Christmas Tree', deck: 'Deck the Halls', swing: 'Swing Low, Sweet Chariot', michael: 'Michael, Row the Boat Ashore', home: 'Home on the Range', yankee: 'Yankee Doodle', clementine: 'Oh My Darling, Clementine', prairie: 'Open Prairie', campfire: 'Campfire Waltz', roots: 'Roots Walk', onedrop: 'One Drop Morning', harbour: 'Harbour Lights', palm: 'Palm Tree Shade', easyskank: 'Easy Skank', tide: 'Low Tide Dub', corner: 'Corner Store', subway: 'Subway Flow', vinyl: 'Vinyl Scratch', rooftop: 'Rooftop Rhymes', beatbox: 'Beatbox Lesson', golden: 'Golden Era', mic: 'Open Mic', silk: 'Silk Nights', skyline: 'Skyline', rain: 'Rain on Glass', afterhours: 'After Hours', softfocus: 'Soft Focus', streetlamp: 'Streetlamp Glow', latetrain: 'Late Train Home', sunshine: 'Sunshine Road', firefly: 'Fireflies Tonight', weekend: 'Weekend Feeling', balloon: 'Paper Balloons', starlight: 'Starlight Radio', singloud: 'Sing It Loud', heartbeat: 'Heartbeat Pop' } }, more: 'More languages',
+    donate: '☕ Buy me a coffee', donateShort: 'Buy me a coffee', recorder: { rec: 'Record', resume: 'Resume recording', pause: 'Pause', stop: 'Stop', play: 'Play recording', save: 'Save recording' }, song: { listen: '▶ Listen', practice: '🎯 Practice', stop: 'Stop song', note: 'Note', of: 'of', done: 'Well done! Mistakes:', miss: 'Not that one: follow the red field', switched: 'Switched scale to', pick: 'Pick a song, then Listen or Practice', lib: { favs: 'Favorites', fav: 'Add to favorites', unfav: 'Remove from favorites', open: '📚 Library', title: 'Library', back: '← Back to the handpan', all: 'All', orig: 'original in this style', pd: 'public domain', note: 'The reggae, hip-hop, urban and pop tracks and some of the country tracks are originals written for this app: well-known hits are copyrighted. Classical, folk, children\'s songs and the other country songs are public domain.' }, names: {} }, more: 'More languages',
     scales: ['D Kurd', 'D Celtic Minor', 'F Low Pygmy', 'D Hijaz', 'C Major', 'C Ionian'],
     moods: ['The classic: warm and melancholic', 'Gentle and storytelling', 'Deep, rhythmic with an African touch', 'Eastern and mysterious', 'Light and cheerful', 'Complete major scale, with the B'],
   },
@@ -253,7 +255,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Galm', soft: 'zacht', space: 'spatie', prevShort: 'vorige', nextShort: 'volgende',
     perc: { gu: 'Gu (bas)', tak: 'Tak (rand)', slap: 'Slap' },
     keys: KEYS('Middelste rij = tonen laag → hoog', 'bovenste rij = zacht', 'spatie = ding', 'toonladder', 'toetsenbord'),
-    donate: '☕ Trakteer me op een koffie', donateShort: 'Trakteer me op een koffie', recorder: { rec: 'Opnemen', resume: 'Opname hervatten', pause: 'Pauze', stop: 'Stop', play: 'Opname afspelen', save: 'Opname bewaren' }, song: { listen: '▶ Voorspelen', practice: '🎯 Oefenen', stop: 'Liedje stoppen', note: 'Noot', of: 'van', done: 'Goed gedaan! Fouten:', miss: 'Niet die: volg het rode vlak', switched: 'Toonladder gewisseld naar', pick: 'Kies een liedje en druk op Voorspelen of Oefenen', cats: { kids: 'Kinderliedjes', classical: 'Klassiek', folk: 'Folk & traditioneel', country: 'Country', reggae: 'Reggae-stijl', hiphop: 'Hiphop-stijl', urban: 'Urban / R&B-stijl', pop: 'Pop-stijl' }, lib: { favs: 'Favorieten', fav: 'Markeer als favoriet', unfav: 'Verwijder uit favorieten', open: '📚 Bibliotheek', title: 'Bibliotheek', back: '← Terug naar de handpan', all: 'Alles', orig: 'eigen nummer in deze stijl', pd: 'publiek domein', note: 'De reggae-, hiphop-, urban- en popnummers en een deel van country zijn eigen nummers, gemaakt voor deze app: bekende hits zijn auteursrechtelijk beschermd. Klassiek, folk, kinderliedjes en de andere countrynummers zijn publiek domein.' }, names: { twinkle: 'Altijd is Kortjakje ziek', mary: 'Mary Had a Little Lamb', frere: 'Vader Jacob', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Old MacDonald Had a Farm', jingle: 'Jingle Bells', ode: 'Ode an die Freude', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Eilandbries', sunrise: 'Offbeat Zonsopgang', hammock: 'Hangmat Groove', riddim: 'Riddim Wandeling' , lightly: 'Hänschen klein', spring: 'Vivaldi – De Lente', largo: 'Dvořák – Largo (Uit de Nieuwe Wereld)', dusty: 'Stoffige Weg', porch: 'Veranda Schommel', bap: 'Boom Bap Stappen', block: 'Buurtfeest', cypher: 'Nachtelijke Cypher', city: 'Stadslichten', midnight: 'Middernachtrit', velvet: 'Fluwelen Groove', summer: 'Zomerdagen', neon: 'Neon Hart', dance: 'De Hele Nacht Dansen', toccata: 'Bach – Toccata in d (opening)', diesirae: 'Dies irae (gregoriaans)', fifth: 'Beethoven – 5e Symfonie (motief)', surprise: 'Haydn – Surprise-symfonie', bridal: 'Wagner – Bruidskoor', canon: 'Pachelbel – Canon (thema)', mozart: 'Mozart – Ah vous dirai-je (thema)', tannenbaum: 'O denneboom', prairie: 'Open Prairie', campfire: 'Kampvuurwals', roots: 'Roots Wandeling', onedrop: 'One Drop Ochtend', harbour: 'Havenlichten', palm: 'Palmboomschaduw', easyskank: 'Rustige Skank', tide: 'Eb Dub', corner: 'Winkel op de Hoek', subway: 'Metro Flow', vinyl: 'Vinyl Scratch', rooftop: 'Dakterras Rijmen', beatbox: 'Beatbox Les', golden: 'Gouden Tijd', mic: 'Open Mic', silk: 'Zijden Nachten', skyline: 'Skyline', rain: 'Regen op Glas', afterhours: 'Na Sluitingstijd', softfocus: 'Zachte Focus', streetlamp: 'Lantaarngloed', latetrain: 'Late Trein Naar Huis', sunshine: 'Zonnige Weg', firefly: 'Vuurvliegjes Vannacht', weekend: 'Weekendgevoel', balloon: 'Papieren Ballonnen', starlight: 'Sterrenlicht Radio', singloud: 'Zing Het Hard', heartbeat: 'Hartslag Pop' } }, more: 'Meer talen',
+    donate: '☕ Trakteer me op een koffie', donateShort: 'Trakteer me op een koffie', recorder: { rec: 'Opnemen', resume: 'Opname hervatten', pause: 'Pauze', stop: 'Stop', play: 'Opname afspelen', save: 'Opname bewaren' }, song: { listen: '▶ Voorspelen', practice: '🎯 Oefenen', stop: 'Liedje stoppen', note: 'Noot', of: 'van', done: 'Goed gedaan! Fouten:', miss: 'Niet die: volg het rode vlak', switched: 'Toonladder gewisseld naar', pick: 'Kies een liedje en druk op Voorspelen of Oefenen', lib: { favs: 'Favorieten', fav: 'Markeer als favoriet', unfav: 'Verwijder uit favorieten', open: '📚 Bibliotheek', title: 'Bibliotheek', back: '← Terug naar de handpan', all: 'Alles', orig: 'eigen nummer in deze stijl', pd: 'publiek domein', note: 'De reggae-, hiphop-, urban- en popnummers en een deel van country zijn eigen nummers, gemaakt voor deze app: bekende hits zijn auteursrechtelijk beschermd. Klassiek, folk, kinderliedjes en de andere countrynummers zijn publiek domein.' }, names: {} }, more: 'Meer talen',
     scales: ['D Kurd', 'D Celtic mineur', 'F Low Pygmy', 'D Hijaz', 'C Majeur', 'C Ionisch'],
     moods: ['De klassieker: warm en melancholisch', 'Zacht en verhalend', 'Diep, ritmisch en Afrikaans getint', 'Oosters en mysterieus', 'Licht en vrolijk', 'Volledige majeurladder, met de B'],
   },
@@ -262,7 +264,7 @@ const LANGS = {
     volume: 'Lautstärke', reverb: 'Hall', soft: 'leise', space: 'Leertaste', prevShort: 'zurück', nextShort: 'weiter',
     perc: { gu: 'Gu (Bass)', tak: 'Tak (Rand)', slap: 'Slap' },
     keys: KEYS('Mittlere Reihe = Töne tief → hoch', 'obere Reihe = leise', 'Leertaste = Ding', 'Tonleiter', 'Tastatur'),
-    donate: '☕ Spendier mir einen Kaffee', donateShort: 'Spendier mir einen Kaffee', recorder: { rec: 'Aufnehmen', resume: 'Aufnahme fortsetzen', pause: 'Pause', stop: 'Stopp', play: 'Aufnahme abspielen', save: 'Aufnahme speichern' }, song: { listen: '▶ Vorspielen', practice: '🎯 Üben', stop: 'Lied stoppen', note: 'Note', of: 'von', done: 'Gut gemacht! Fehler:', miss: 'Nicht diese: folge dem roten Feld', switched: 'Tonleiter gewechselt zu', pick: 'Wähle ein Lied, dann Vorspielen oder Üben', cats: { kids: 'Kinderlieder', classical: 'Klassik', folk: 'Folk & traditionell', country: 'Country', reggae: 'Reggae-Stil', hiphop: 'Hip-Hop-Stil', urban: 'Urban / R&B-Stil', pop: 'Pop-Stil' }, lib: { favs: 'Favoriten', fav: 'Zu Favoriten hinzufügen', unfav: 'Aus Favoriten entfernen', open: '📚 Bibliothek', title: 'Bibliothek', back: '← Zurück zur Handpan', all: 'Alle', orig: 'eigenes Stück in diesem Stil', pd: 'gemeinfrei', note: 'Die Reggae-, Hip-Hop-, Urban- und Pop-Stücke sowie einige Country-Stücke sind eigene Kompositionen für diese App: bekannte Hits sind urheberrechtlich geschützt. Klassik, Folk, Kinderlieder und die übrigen Country-Lieder sind gemeinfrei.' }, names: { twinkle: 'Morgen kommt der Weihnachtsmann', mary: 'Mary Had a Little Lamb', frere: 'Bruder Jakob', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Old MacDonald hat ’ne Farm', jingle: 'Jingle Bells', ode: 'Ode an die Freude', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Inselbrise', sunrise: 'Offbeat-Sonnenaufgang', hammock: 'Hängematten-Groove', riddim: 'Riddim-Spaziergang' , lightly: 'Hänschen klein', spring: 'Vivaldi – Frühling', largo: 'Dvořák – Largo (Aus der Neuen Welt)', toccata: 'Bach – Toccata d-Moll (Anfang)', diesirae: 'Dies irae (gregorianisch)', fifth: 'Beethoven – 5. Sinfonie (Motiv)', surprise: 'Haydn – Sinfonie mit dem Paukenschlag', bridal: 'Wagner – Treulich geführt', canon: 'Pachelbel – Kanon (Thema)', mozart: 'Mozart – Ah vous dirai-je (Thema)', tannenbaum: 'O Tannenbaum' } }, more: 'Weitere Sprachen',
+    donate: '☕ Spendier mir einen Kaffee', donateShort: 'Spendier mir einen Kaffee', recorder: { rec: 'Aufnehmen', resume: 'Aufnahme fortsetzen', pause: 'Pause', stop: 'Stopp', play: 'Aufnahme abspielen', save: 'Aufnahme speichern' }, song: { listen: '▶ Vorspielen', practice: '🎯 Üben', stop: 'Lied stoppen', note: 'Note', of: 'von', done: 'Gut gemacht! Fehler:', miss: 'Nicht diese: folge dem roten Feld', switched: 'Tonleiter gewechselt zu', pick: 'Wähle ein Lied, dann Vorspielen oder Üben', lib: { favs: 'Favoriten', fav: 'Zu Favoriten hinzufügen', unfav: 'Aus Favoriten entfernen', open: '📚 Bibliothek', title: 'Bibliothek', back: '← Zurück zur Handpan', all: 'Alle', orig: 'eigenes Stück in diesem Stil', pd: 'gemeinfrei', note: 'Die Reggae-, Hip-Hop-, Urban- und Pop-Stücke sowie einige Country-Stücke sind eigene Kompositionen für diese App: bekannte Hits sind urheberrechtlich geschützt. Klassik, Folk, Kinderlieder und die übrigen Country-Lieder sind gemeinfrei.' }, names: {} }, more: 'Weitere Sprachen',
     scales: ['D Kurd', 'D Keltisch Moll', 'F Low Pygmy', 'D Hijaz', 'C Dur', 'C Ionisch'],
     moods: ['Der Klassiker: warm und melancholisch', 'Sanft und erzählend', 'Tief, rhythmisch, afrikanisch angehaucht', 'Orientalisch und geheimnisvoll', 'Leicht und fröhlich', 'Vollständige Durtonleiter, mit dem H'],
   },
@@ -271,7 +273,7 @@ const LANGS = {
     volume: 'Volume', reverb: 'Réverb', soft: 'doux', space: 'espace', prevShort: 'précédente', nextShort: 'suivante',
     perc: { gu: 'Gu (basse)', tak: 'Tak (bord)', slap: 'Slap' },
     keys: KEYS('Rangée du milieu = notes grave → aigu', 'rangée du haut = doux', 'espace = ding', 'gamme', 'clavier'),
-    donate: '☕ Offrez-moi un café', donateShort: 'Offrez-moi un café', recorder: { rec: 'Enregistrer', resume: 'Reprendre', pause: 'Pause', stop: 'Arrêt', play: 'Écouter', save: 'Sauvegarder' }, song: { listen: '▶ Écouter', practice: '🎯 S\'exercer', stop: 'Arrêter', note: 'Note', of: 'sur', done: 'Bravo ! Erreurs :', miss: 'Pas celle-là : suivez la zone rouge', switched: 'Gamme changée :', pick: 'Choisissez une chanson, puis Écouter ou S\'exercer', cats: { kids: 'Comptines', classical: 'Classique', folk: 'Folk & traditionnel', country: 'Country', reggae: 'Style reggae', hiphop: 'Style hip-hop', urban: 'Style urbain / R&B', pop: 'Style pop' }, lib: { favs: 'Favoris', fav: 'Ajouter aux favoris', unfav: 'Retirer des favoris', open: '📚 Bibliothèque', title: 'Bibliothèque', back: '← Retour au handpan', all: 'Tout', orig: 'composition dans ce style', pd: 'domaine public', note: 'Les morceaux reggae, hip-hop, urbains et pop ainsi qu\'une partie de la country sont des compositions originales pour cette appli : les tubes connus sont protégés par le droit d\'auteur. Le classique, le folk, les comptines et les autres chansons country sont du domaine public.' }, names: { twinkle: 'Ah ! vous dirai-je, maman', mary: 'Mary Had a Little Lamb', frere: 'Frère Jacques', row: 'Row, Row, Row Your Boat', london: 'London Bridge', mac: 'Dans la ferme de Mathurin', jingle: 'Vive le vent', ode: 'Ode à la joie', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbaya', breeze: 'Brise des îles', sunrise: 'Lever de soleil offbeat', hammock: 'Groove du hamac', riddim: 'Balade riddim' , spring: 'Vivaldi – Le Printemps', largo: 'Dvořák – Largo (Nouveau Monde)', auld: 'Ce n\'est qu\'un au revoir', toccata: 'Bach – Toccata en ré mineur (début)', diesirae: 'Dies irae (grégorien)', fifth: 'Beethoven – 5e Symphonie (motif)', surprise: 'Haydn – Symphonie La Surprise', bridal: 'Wagner – Chœur nuptial', canon: 'Pachelbel – Canon (thème)', mozart: 'Mozart – Ah ! vous dirai-je, maman (thème)', tannenbaum: 'Mon beau sapin' } }, more: 'Autres langues',
+    donate: '☕ Offrez-moi un café', donateShort: 'Offrez-moi un café', recorder: { rec: 'Enregistrer', resume: 'Reprendre', pause: 'Pause', stop: 'Arrêt', play: 'Écouter', save: 'Sauvegarder' }, song: { listen: '▶ Écouter', practice: '🎯 S\'exercer', stop: 'Arrêter', note: 'Note', of: 'sur', done: 'Bravo ! Erreurs :', miss: 'Pas celle-là : suivez la zone rouge', switched: 'Gamme changée :', pick: 'Choisissez une chanson, puis Écouter ou S\'exercer', lib: { favs: 'Favoris', fav: 'Ajouter aux favoris', unfav: 'Retirer des favoris', open: '📚 Bibliothèque', title: 'Bibliothèque', back: '← Retour au handpan', all: 'Tout', orig: 'composition dans ce style', pd: 'domaine public', note: 'Les morceaux reggae, hip-hop, urbains et pop ainsi qu\'une partie de la country sont des compositions originales pour cette appli : les tubes connus sont protégés par le droit d\'auteur. Le classique, le folk, les comptines et les autres chansons country sont du domaine public.' }, names: {} }, more: 'Autres langues',
     scales: ['D Kurd', 'D Celtique mineur', 'F Low Pygmy', 'D Hijaz', 'C Majeur', 'C Ionien'],
     moods: ['Le classique : chaleureux et mélancolique', 'Doux et narratif', 'Profond, rythmé, aux accents africains', 'Oriental et mystérieux', 'Léger et joyeux', 'Gamme majeure complète, avec le si'],
   },
@@ -280,7 +282,7 @@ const LANGS = {
     volume: 'Volumen', reverb: 'Reverb', soft: 'suave', space: 'espacio', prevShort: 'anterior', nextShort: 'siguiente',
     perc: { gu: 'Gu (bajo)', tak: 'Tak (borde)', slap: 'Slap' },
     keys: KEYS('Fila central = notas grave → agudo', 'fila superior = suave', 'espacio = ding', 'escala', 'teclado'),
-    donate: '☕ Invítame a un café', donateShort: 'Invítame a un café', recorder: { rec: 'Grabar', resume: 'Reanudar', pause: 'Pausa', stop: 'Detener', play: 'Reproducir', save: 'Guardar' }, song: { listen: '▶ Escuchar', practice: '🎯 Practicar', stop: 'Detener', note: 'Nota', of: 'de', done: '¡Muy bien! Errores:', miss: 'Esa no: sigue la zona roja', switched: 'Escala cambiada a', pick: 'Elige una canción y pulsa Escuchar o Practicar', cats: { kids: 'Canciones infantiles', classical: 'Clásica', folk: 'Folk y tradicional', country: 'Country', reggae: 'Estilo reggae', hiphop: 'Estilo hip-hop', urban: 'Estilo urbano / R&B', pop: 'Estilo pop' }, lib: { favs: 'Favoritos', fav: 'Añadir a favoritos', unfav: 'Quitar de favoritos', open: '📚 Biblioteca', title: 'Biblioteca', back: '← Volver al handpan', all: 'Todo', orig: 'original en este estilo', pd: 'dominio público', note: 'Los temas de reggae, hip-hop, urbano y pop y parte del country son composiciones originales para esta app: los éxitos conocidos tienen derechos de autor. La clásica, el folk, las canciones infantiles y el resto del country son de dominio público.' }, names: { twinkle: 'Estrellita, ¿dónde estás?', mary: 'Mary Had a Little Lamb', frere: 'Martinillo', row: 'Rema, rema, rema tu bote', london: 'El puente de Londres', mac: 'En la granja de mi tío', jingle: 'Jingle Bells', ode: 'Himno de la alegría', saints: 'When the Saints Go Marching In', susanna: 'Oh! Susanna', grace: 'Amazing Grace', kumbaya: 'Kumbayá', breeze: 'Brisa de la isla', sunrise: 'Amanecer offbeat', hammock: 'Groove de hamaca', riddim: 'Paseo riddim' , spring: 'Vivaldi – La Primavera', largo: 'Dvořák – Largo (Nuevo Mundo)', auld: 'Canción de la despedida', toccata: 'Bach – Tocata en re menor (inicio)', diesirae: 'Dies irae (gregoriano)', fifth: 'Beethoven – 5.ª Sinfonía (motivo)', surprise: 'Haydn – Sinfonía La sorpresa', bridal: 'Wagner – Coro nupcial', canon: 'Pachelbel – Canon (tema)', mozart: 'Mozart – Ah, vous dirai-je (tema)', tannenbaum: 'Oh árbol de Navidad' } }, more: 'Más idiomas',
+    donate: '☕ Invítame a un café', donateShort: 'Invítame a un café', recorder: { rec: 'Grabar', resume: 'Reanudar', pause: 'Pausa', stop: 'Detener', play: 'Reproducir', save: 'Guardar' }, song: { listen: '▶ Escuchar', practice: '🎯 Practicar', stop: 'Detener', note: 'Nota', of: 'de', done: '¡Muy bien! Errores:', miss: 'Esa no: sigue la zona roja', switched: 'Escala cambiada a', pick: 'Elige una canción y pulsa Escuchar o Practicar', lib: { favs: 'Favoritos', fav: 'Añadir a favoritos', unfav: 'Quitar de favoritos', open: '📚 Biblioteca', title: 'Biblioteca', back: '← Volver al handpan', all: 'Todo', orig: 'original en este estilo', pd: 'dominio público', note: 'Los temas de reggae, hip-hop, urbano y pop y parte del country son composiciones originales para esta app: los éxitos conocidos tienen derechos de autor. La clásica, el folk, las canciones infantiles y el resto del country son de dominio público.' }, names: {} }, more: 'Más idiomas',
     scales: ['D Kurd', 'D Celta menor', 'F Low Pygmy', 'D Hijaz', 'C Mayor', 'C Jónico'],
     moods: ['El clásico: cálido y melancólico', 'Suave y narrativo', 'Profundo, rítmico, con aire africano', 'Oriental y misterioso', 'Ligero y alegre', 'Escala mayor completa, con el si'],
   },
@@ -607,94 +609,17 @@ function applyLang() {
 // ---------- Liedjes leren ----------
 // Melodieën in C; noot:tellen, R = rust. Publiek domein, behalve de reggae-serie: eigen composities in reggaestijl.
 // Een liedje is de lijst noten zonder rusten (om te oefenen), met .items (incl. rusten), .bpm, .cat en .id voor het voorspelen.
-const SONG_DATA = [
-  ['twinkle', 'kids', 100, 'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2', false],
-  ['mary', 'kids', 100, 'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4', false],
-  ['frere', 'kids', 100, 'C4 D4 E4 C4 C4 D4 E4 C4 E4 F4 G4:2 E4 F4 G4:2 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 G4:.5 A4:.5 G4:.5 F4:.5 E4 C4 C4 G3 C4:2 C4 G3 C4:2', false],
-  ['row', 'kids', 100, 'C4:1.5 C4:1.5 C4 D4:.5 E4:1.5 E4 D4:.5 E4 F4:.5 G4:3 C5:.5 C5:.5 C5:.5 G4:.5 G4:.5 G4:.5 E4:.5 E4:.5 E4:.5 C4:.5 C4:.5 C4:.5 G4 F4:.5 E4 D4:.5 C4:3', false],
-  ['london', 'kids', 100, 'G4:1.5 A4:.5 G4 F4 E4 F4 G4:2 D4 E4 F4:2 E4 F4 G4:2 G4:1.5 A4:.5 G4 F4 E4 F4 G4:2 D4:2 G4:2 E4 C4:3', false],
-  ['mac', 'kids', 110, 'C4 C4 C4 G3 A3 A3 G3:2 E4 E4 D4 D4 C4:3 G3 C4 C4 C4 G3 A3 A3 G3:2 E4 E4 D4 D4 C4:4', false],
-  ['jingle', 'kids', 110, 'E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 E4 D4 D4 E4 D4:2 G4:2 E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 G4 G4 F4 D4 C4:4', false],
-  ['ode', 'classical', 100, 'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:.5 D4:2 E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 D4:1.5 C4:.5 C4:2', false],
-  ['saints', 'folk', 110, 'C4 E4 F4 G4:4 C4 E4 F4 G4:4 C4 E4 F4 G4:2 E4:2 C4:2 E4:2 D4:4 E4 E4 D4 C4:3 C4 E4:2 G4:2 G4 F4:3 E4 F4 G4:2 E4:2 C4:2 D4:2 C4:4', false],
-  ['susanna', 'country', 110, 'C4:.5 D4:.5 E4 G4 G4:1.5 A4:.5 G4 E4 C4:1.5 D4:.5 E4 E4 D4 C4 D4:3 C4:.5 D4:.5 E4 G4 G4:1.5 A4:.5 G4 E4 C4:1.5 D4:.5 E4 E4 D4 D4 C4:3', false],
-  ['grace', 'folk', 80, 'G3 C4:2 E4:.5 C4:.5 E4:2 D4 C4:2 A3 G3:2 G3 C4:2 E4:.5 C4:.5 E4:2 D4 G4:3 E4:.5 G4:.5 E4:2 C4 G3:2 A3 C4:1.5 A3:.5 G3:2 G3 C4:2 E4:.5 C4:.5 E4:2 D4 C4:3', false],
-  ['kumbaya', 'folk', 90, 'C4 E4 G4:2 G4 G4 A4 A4 G4:2 C4 E4 G4:2 G4 G4 F4 E4 D4:2 C4 E4 G4:2 G4 G4 A4 A4 G4:2 F4 E4 D4 D4 C4:3', false],
-  ['breeze', 'reggae', 80, 'R:.5 A3:.5 C4:.5 D4:.5 E4 R:.5 E4:.5 D4:.5 C4:.5 A3:1.5 R:.5 R:.5 A3:.5 C4:.5 D4:.5 E4:.5 G4 E4:.5 D4:2 R:.5 E4:.5 G4:.5 A4:.5 G4 E4:.5 D4:.5 C4 D4:.5 C4:.5 A3:2', true],
-  ['sunrise', 'reggae', 84, 'R:.5 C4:.5 R:.5 E4:.5 R:.5 G4:.5 R:.5 A4:.5 G4 E4 D4:2 R:.5 D4:.5 R:.5 E4:.5 R:.5 G4:.5 E4:.5 D4:.5 C4:2 R:.5 C4:.5 R:.5 E4:.5 R:.5 G4:.5 R:.5 A4:.5 C5 A4 G4:2 E4:.5 G4:.5 E4:.5 D4:.5 C4:3', true],
-  ['hammock', 'reggae', 72, 'A3 R:.5 C4:.5 E4 R:.5 D4:.5 C4:.5 D4:.5 E4 C4:2 A3 R:.5 C4:.5 E4 R:.5 F4:.5 E4:.5 D4:.5 C4 D4:2 E4:.5 F4:.5 G4 F4:.5 E4:.5 D4 C4:.5 D4:.5 E4 C4 A3:3', true],
-  ['riddim', 'reggae', 88, 'R:.5 E4:.5 E4:.5 D4:.5 C4 R:.5 C4:.5 D4:.5 E4:.5 G4 E4:2 R:.5 A4:.5 G4:.5 E4:.5 D4 R:.5 C4:.5 D4:.5 E4:.5 D4:2 R:.5 E4:.5 E4:.5 D4:.5 C4 R:.5 A3:.5 C4:.5 D4:.5 E4 G4:.5 E4:.5 D4:.5 C4:.5 A3:3', true],
-  ['hotcross', 'kids', 100, 'E4 D4 C4:2 E4 D4 C4:2 C4:.5 C4:.5 C4:.5 C4:.5 D4:.5 D4:.5 D4:.5 D4:.5 E4 D4 C4:2', false],
-  ['thisoldman', 'kids', 110, 'G4 E4 G4:2 G4 E4 G4:2 A4 G4 F4 E4 D4 E4 F4:2 E4 F4 G4 C4 C4 C4:.5 C4:.5 C4:.5 D4:.5 E4:.5 F4:.5 G4:2 G4 D4 F4 E4 D4 C4:2', false],
-  ['itsy', 'kids', 100, 'G3 C4 C4 C4 D4 E4:1.5 E4:.5 E4 D4 C4 D4 E4 C4:2 E4 E4 F4 G4:2 G4 F4 E4 F4 G4 E4:2 C4 C4 D4 E4:2 E4 D4 C4 D4 E4 C4:2 G3 G3 C4 C4 C4 D4 E4:1.5 E4:.5 E4 D4 C4 D4 E4 C4:3', false],
-  ['lightly', 'kids', 110, 'G4 E4 E4:2 F4 D4 D4:2 C4 D4 E4 F4 G4 G4 G4:2 G4 E4 E4:2 F4 D4 D4:2 C4 E4 G4 G4 C4:4 D4 D4 D4 D4 D4 E4 F4:2 E4 E4 E4 E4 E4 F4 G4:2 G4 E4 E4:2 F4 D4 D4:2 C4 E4 G4 G4 C4:4', false],
-  ['spring', 'classical', 100, 'C4 E4 E4 E4 D4:.5 C4:.5 G4:3 G4:.5 F4:.5 E4 E4 E4 D4:.5 C4:.5 G4:3 G4:.5 F4:.5 E4 F4:.5 G4:.5 F4 E4 D4:2', false],
-  ['largo', 'classical', 66, 'E4:1.5 G4:.5 G4:2 E4:1.5 D4:.5 C4:2 D4 E4 G4 E4 D4:4 E4:1.5 G4:.5 G4:2 E4:1.5 D4:.5 C4:2 D4 E4 D4 C4 C4:4', false],
-  ['auld', 'folk', 84, 'G3 C4:1.5 C4:.5 C4 E4 D4:1.5 C4:.5 D4 E4:.5 D4:.5 C4:1.5 C4:.5 E4 G4 A4:3 A4 G4:1.5 E4:.5 E4 C4 D4:1.5 C4:.5 D4 E4:.5 D4:.5 C4:1.5 A3:.5 A3 G3 C4:3', false],
-  ['camptown', 'country', 120, 'G4 G4 E4 G4 A4 G4 E4:2 E4 D4:2 E4 D4:2 G4 G4 E4 G4 A4 G4 E4:2 D4:.5 D4:.5 E4 D4 C4:3', false],
-  ['redriver', 'country', 96, 'G3 C4 E4 E4 E4:1.5 D4:.5 E4 D4 C4:3 G3 C4 E4 C4 E4 G4 F4:3 A4 G4 F4 F4 E4 D4 E4 F4 E4:3 G4 F4 E4 E4 D4 C4 D4 E4 C4:3', false],
-  ['dusty', 'country', 110, 'C4 E4 G4:2 A4 G4 E4:2 F4 F4 E4 D4 E4:3 R:1 C4 E4 G4:2 A4 C5 A4:2 G4 E4 D4 D4 C4:3', true],
-  ['porch', 'country', 104, 'G4 E4 C4 E4 G4:2 G4 A4 G4 E4 D4:2 R:1 E4 F4 G4:2 A4 G4 E4 C4 D4 E4 C4:4', true],
-  ['bap', 'hiphop', 88, 'A3:.5 A3:.5 C4 R:.5 A3:.5 C4:.5 D4:.5 E4 D4:.5 C4:.5 A3:2 A3:.5 A3:.5 C4 R:.5 A3:.5 C4:.5 D4:.5 E4:.5 G4:.5 E4 D4:2 E4:.5 E4:.5 D4 R:.5 C4:.5 D4:.5 C4:.5 A3:.5 C4 A3:3', true],
-  ['block', 'hiphop', 92, 'E4 R:.5 E4:.5 G4:.5 E4:.5 D4 C4:.5 D4:.5 E4 R:1 E4 R:.5 E4:.5 G4:.5 A4:.5 G4 E4:2 R:.5 D4:.5 D4:.5 C4:.5 A3 C4:.5 D4:.5 E4:.5 D4:.5 C4:.5 A3:.5 A3:3', true],
-  ['cypher', 'hiphop', 84, 'A3 C4 E4:.5 D4:.5 R:.5 C4:.5 A3 R:1 A3 C4 E4:.5 G4:.5 R:.5 E4:.5 D4:2 C4:.5 D4:.5 E4 G4:.5 E4:.5 D4 C4:.5 A3:.5 C4 A3:3', true],
-  ['city', 'urban', 80, 'R:.5 E4:.5 G4:.5 A4:1.5 G4:.5 E4:.5 D4 C4:.5 D4:1.5 R:1 R:.5 E4:.5 G4:.5 A4:1.5 C5:.5 A4:.5 G4 E4:.5 D4:2 R:.5 C4:.5 D4:.5 E4 D4:.5 C4:.5 A3:3', true],
-  ['midnight', 'urban', 76, 'A3:.5 C4:.5 E4:2 D4:.5 C4:.5 D4:2 R:1 A3:.5 C4:.5 E4:2 G4:.5 F4:.5 E4:2 R:1 F4 E4 D4:.5 C4:.5 D4 C4 A3:3', true],
-  ['velvet', 'urban', 78, 'E4:1.5 D4:.5 E4 G4 A4:2 G4:.5 E4:.5 D4:2 R:1 C4:.5 D4:.5 E4 G4:.5 E4:.5 D4 C4 A3:3', true],
-  ['summer', 'pop', 112, 'E4 E4 G4 E4 D4 C4 D4:2 E4 E4 G4 A4 G4:3 R:1 A4 A4 G4 E4 F4 E4 D4:2 C4 D4 E4 D4 C4:4', true],
-  ['neon', 'pop', 116, 'C4 C4 E4:.5 G4:1.5 A4 G4 E4:2 F4 F4 E4 D4 E4:2 R:1 C4 C4 E4:.5 G4:1.5 C5 A4 G4:2 F4 E4 D4 D4 C4:4', true],
-  ['dance', 'pop', 120, 'G4:.5 G4:.5 A4 G4 E4 G4:.5 G4:.5 A4 G4 E4 D4 E4 F4 E4 D4 C4:2 R:1 G4:.5 G4:.5 A4 G4 E4 C5 A4 G4:2 F4 E4 D4 E4 C4:4', true],
-  ['toccata', 'classical', 72, 'A4:.5 G4:.5 A4:3 G4:.25 F4:.25 E4:.25 D4:.25 C#4:1.5 D4:3 A4:.5 G4:.5 A4:3 G4:.25 F4:.25 E4:.25 D4:.25 C#4:1.5 D4:3', false],
-  ['diesirae', 'classical', 70, 'F4 E4 F4 D4 E4 C4 D4 D4:2 F4 F4 G4 F4 E4 D4 C4 E4 F4 E4 D4:2', false],
-  ['fifth', 'classical', 100, 'G4:.5 G4:.5 G4:.5 Eb4:3.5 F4:.5 F4:.5 F4:.5 D4:3.5 G4:.5 G4:.5 G4:.5 Eb4:1.5 F4:.5 F4:.5 F4:.5 D4:3.5', false],
-  ['surprise', 'classical', 96, 'C4:.5 C4:.5 E4:.5 E4:.5 G4:.5 G4:.5 E4 F4:.5 F4:.5 D4:.5 D4:.5 B3:.5 B3:.5 G3 C4:.5 C4:.5 E4:.5 E4:.5 G4:.5 G4:.5 E4 F4:.5 F4:.5 D4:.5 D4:.5 B3:.5 B3:.5 G3', false],
-  ['bridal', 'classical', 76, 'G3 C4:1.5 C4:.5 C4:2 G3 D4:1.5 B3:.5 C4:2 G3 C4:1.5 F4:.5 F4:1.5 E4:.5 D4:1.5 C4:.5 B3:1.5 C4:.5 D4:2', false],
-  ['canon', 'classical', 70, 'E4:2 D4:2 C4:2 B3:2 A3:2 G3:2 A3:2 B3:2 E4:2 D4:2 C4:2 B3:2 A3:2 G3:2 A3:2 B3:2 C4:4', false],
-  ['mozart', 'classical', 90, 'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2', false],
-  ['aura', 'folk', 80, 'G3 C4 B3 C4 D4 A3 D4:2 C4 B3 A3 B3 C4:3 R:1 G3 C4 B3 C4 D4 A3 D4:2 C4 B3 A3 B3 C4:3', false],
-  ['simple', 'folk', 96, 'G3:.5 G3:.5 C4 C4:.5 D4:.5 E4:.5 C4:.5 E4:.5 F4:.5 G4 G4:.5 F4:.5 E4 D4:.5 C4:.5 D4 D4:.5 D4:.5 D4 G3 D4:.5 E4:.5 D4:.5 B3:.5 G3 G3:.5 G3:.5 C4 C4:.5 D4:.5 E4:.5 C4:.5 E4:.5 F4:.5 G4 F4:.5 E4:.5 D4 D4:.5 E4:.5 D4 C4:.5 C4:.5 C4:2', false],
-  ['tannenbaum', 'folk', 84, 'G3 C4:.75 C4:.25 C4:1.5 D4:.5 E4:.75 E4:.25 E4:1.5 E4:.5 D4:.5 E4:.5 F4 B3 D4 C4:2', false],
-  ['deck', 'folk', 110, 'G4:1.5 F4:.5 E4 D4 C4 D4 E4 C4 D4:.5 E4:.5 F4:.5 D4:.5 E4:1.5 D4:.5 C4 B3 C4:2 G4:1.5 F4:.5 E4 D4 C4 D4 E4 C4 D4:.5 E4:.5 F4:.5 D4:.5 E4:1.5 D4:.5 C4 B3 C4:2', false],
-  ['swing', 'folk', 76, 'E4:2 C4 E4:1.5 C4:.5 A3 G3:2 G3 C4 C4 C4:.5 E4:.5 G4 G4:3 E4:2 C4 E4:1.5 C4:.5 A3 G3:2 G3 C4 D4 E4 D4 C4:3', false],
-  ['michael', 'folk', 96, 'C4 E4 G4 E4 G4 A4 G4:2 E4 G4 A4 G4:3 E4 G4 G4 E4 F4 E4 D4:2 C4 D4 E4 D4 C4:3', false],
-  ['home', 'country', 96, 'G3 G3 C4 D4 E4:2 C4 B3 A3 F4 F4 F4:2 E4 F4 G4:2 C4 C4 C4 B3 C4 D4:2 C4:3', false],
-  ['yankee', 'country', 120, 'C4 C4 D4 E4 C4 E4 D4 G3 C4 C4 D4 E4 C4:2 B3:2 C4 C4 D4 E4 F4 E4 D4 C4 B3 G3 A3 B3 C4:2 C4:2', false],
-  ['clementine', 'country', 100, 'C4:1.5 C4:.5 C4 G3 E4:1.5 E4:.5 E4 C4 C4:1.5 E4:.5 G4:1.5 G4:.5 F4 E4 D4:3 D4:1.5 E4:.5 F4 F4 E4:1.5 D4:.5 E4 C4 C4:1.5 E4:.5 D4:1.5 G3:.5 B3 D4 C4:3', false],
-  ['prairie', 'country', 104, 'G4 E4 G4 A4 G4:2 E4 D4 C4 D4 E4:3 R:1 G4 A4 C5 A4 G4:2 E4 G4 E4 D4 C4:4', true],
-  ['campfire', 'country', 96, 'C4:2 E4 G4:2 E4 F4:2 E4 D4:3 D4:2 F4 A4:2 G4 E4:2 D4 C4:3', true],
-  ['roots', 'reggae', 76, 'R:.5 A3:.5 A3:.5 C4:.5 D4 R:.5 D4:.5 E4:.5 D4:.5 C4:2 R:.5 A3:.5 A3:.5 C4:.5 D4 R:.5 E4:.5 G4:.5 E4:.5 D4:2 R:.5 C4:.5 D4:.5 E4:.5 G4 E4:.5 D4:.5 C4 A3:3', true],
-  ['onedrop', 'reggae', 74, 'R:1 E4:.5 G4:.5 A4:2 R:.5 G4:.5 E4:.5 D4:.5 E4:2 R:1 C4:.5 D4:.5 E4:2 R:.5 D4:.5 C4:.5 A3:.5 C4:3', true],
-  ['harbour', 'reggae', 80, 'C4:.5 D4:.5 E4 R:.5 E4:.5 G4 E4:.5 D4:.5 C4:2 D4:.5 E4:.5 G4 R:.5 A4:.5 G4 E4:2 R:.5 C4:.5 D4:.5 E4:.5 D4 C4:.5 A3:.5 C4:3', true],
-  ['palm', 'reggae', 72, 'A4:1.5 G4:.5 E4 R:1 G4:.5 E4:.5 D4:.5 C4:.5 D4:2 R:1 A3:.5 C4:.5 D4 E4:.5 G4:.5 E4 D4:.5 C4:.5 A3:3', true],
-  ['easyskank', 'reggae', 82, 'R:.5 E4:.5 R:.5 E4:.5 R:.5 D4:.5 C4 R:.5 C4:.5 R:.5 D4:.5 E4:2 R:.5 G4:.5 R:.5 G4:.5 R:.5 E4:.5 D4 R:.5 C4:.5 D4:.5 C4:.5 A3:2', true],
-  ['tide', 'reggae', 70, 'A3:2 C4:.5 D4:.5 E4:2 R:1 D4:.5 C4:.5 A3:2 R:1 E4:.5 G4:.5 A4:2 G4:.5 E4:.5 D4:2 R:.5 C4:.5 D4 C4 A3:3', true],
-  ['corner', 'hiphop', 90, 'A3:.5 C4:.5 A3:.5 C4:.5 D4 R:.5 C4:.5 A3:.5 C4:.5 D4:.5 E4:.5 D4:2 A3:.5 C4:.5 A3:.5 C4:.5 D4 R:.5 E4:.5 G4:.5 E4:.5 D4:.5 C4:.5 A3:2', true],
-  ['subway', 'hiphop', 86, 'E4:.5 E4:.5 E4:.5 D4:.5 C4 A3 R:.5 C4:.5 D4:.5 E4:.5 D4:2 E4:.5 E4:.5 G4:.5 E4:.5 D4 C4 R:.5 A3:.5 C4:.5 D4:.5 C4:2', true],
-  ['vinyl', 'hiphop', 92, 'A3 R:.5 A3:.5 C4:.5 A3:.5 R:.5 D4:.5 E4:2 A3 R:.5 A3:.5 C4:.5 E4:.5 R:.5 G4:.5 E4:2 D4:.5 C4:.5 D4:.5 E4:.5 D4 C4:.5 A3:.5 A3:3', true],
-  ['rooftop', 'hiphop', 88, 'C4:.5 D4:.5 E4 E4:.5 D4:.5 C4 R:1 C4:.5 D4:.5 E4 G4:.5 E4:.5 D4 R:1 E4:.5 G4:.5 A4 G4:.5 E4:.5 D4 C4:.5 D4:.5 C4 A3:2', true],
-  ['beatbox', 'hiphop', 94, 'D4:.5 D4:.5 R:.5 D4:.5 C4 A3 D4:.5 D4:.5 R:.5 E4:.5 D4:2 G4:.5 G4:.5 R:.5 E4:.5 D4 C4 A3:.5 C4:.5 R:.5 D4:.5 C4:2', true],
-  ['golden', 'hiphop', 85, 'E4 R:.5 D4:.5 C4 A3 R:.5 C4:.5 D4:.5 E4:.5 G4 E4 R:1 D4 R:.5 C4:.5 A3 C4 D4:.5 C4:.5 A3:3', true],
-  ['mic', 'hiphop', 90, 'A3:.5 C4:.5 D4:.5 E4:.5 G4 E4 D4:.5 C4:.5 A3 R:1 A3:.5 C4:.5 D4:.5 E4:.5 A4 G4 E4:.5 D4:.5 E4:2 C4:.5 D4:.5 C4:.5 A3:.5 C4 A3:3', true],
-  ['silk', 'urban', 76, 'E4:1.5 F4:.5 E4 D4 C4:2 R:1 D4:1.5 E4:.5 F4 E4 D4:2 R:1 C4:.5 D4:.5 E4 G4:.5 F4:.5 E4 D4:.5 C4:.5 A3:3', true],
-  ['skyline', 'urban', 80, 'R:.5 A4:.5 G4:.5 E4:.5 G4:2 R:.5 E4:.5 D4:.5 C4:.5 D4:2 R:.5 A4:.5 G4:.5 E4:.5 C5:1.5 A4:.5 G4:2 E4:.5 D4:.5 C4 A3:3', true],
-  ['rain', 'urban', 72, 'C4:.5 E4:.5 G4:2 F4:.5 E4:.5 D4:2 R:1 A3:.5 C4:.5 E4:2 D4:.5 C4:.5 A3:2 R:1 F4 E4:.5 D4:.5 E4 C4 A3:3', true],
-  ['afterhours', 'urban', 78, 'A3:.5 C4:.5 D4:.5 E4:1.5 R:1 D4:.5 E4:.5 G4:.5 E4:1.5 R:1 G4:.5 A4:.5 G4:.5 E4:.5 D4:.5 C4:.5 D4:2 C4:.5 A3:.5 C4:3', true],
-  ['softfocus', 'urban', 74, 'G4:1.5 E4:.5 D4 C4 D4:2 E4:2 R:1 G4:1.5 A4:.5 G4 E4 D4:3 R:1 C4:.5 D4:.5 E4 D4:.5 C4:.5 A3:3', true],
-  ['streetlamp', 'urban', 82, 'R:.5 C4:.5 E4:.5 G4:.5 A4 G4:.5 E4:.5 D4:2 R:.5 C4:.5 E4:.5 G4:.5 A4 C5:.5 A4:.5 G4:2 R:.5 E4:.5 D4:.5 C4:.5 D4 E4:.5 D4:.5 C4:3', true],
-  ['latetrain', 'urban', 76, 'E4:.5 D4:.5 C4:2 A3:.5 C4:.5 D4:2 R:1 E4:.5 G4:.5 A4:2 G4:.5 E4:.5 D4:2 R:1 C4:.5 D4:.5 E4 D4 C4 A3:3', true],
-  ['sunshine', 'pop', 112, 'C4 E4 G4 G4 A4 G4 E4:2 D4 E4 F4 E4 D4 C4 D4:2 C4 E4 G4 G4 A4 C5 A4:2 G4 E4 D4 E4 C4:4', true],
-  ['firefly', 'pop', 108, 'G4 G4 E4 C4 D4 E4 C4:2 G4 G4 A4 G4 E4:3 R:1 F4 F4 E4 D4 E4 G4 E4:2 D4 D4 E4 D4 C4:4', true],
-  ['weekend', 'pop', 118, 'E4:.5 E4:.5 G4 E4 C4 D4:.5 D4:.5 E4 D4 C4:2 E4:.5 E4:.5 G4 A4 G4 E4:.5 D4:.5 E4:3 R:1 A4:.5 A4:.5 G4 E4 D4 C4 D4 E4 C4:3', true],
-  ['balloon', 'pop', 110, 'C4 D4 E4:2 G4 E4 D4:2 C4 D4 E4 G4 A4:3 R:1 A4 G4 E4:2 D4 C4 D4:2 E4 D4 C4 A3 C4:4', true],
-  ['starlight', 'pop', 116, 'G4:.5 A4:.5 G4 E4 G4:.5 A4:.5 G4 E4 F4 E4 D4 C4 D4:2 R:1 G4:.5 A4:.5 G4 E4 C5 A4 G4:2 F4 E4 D4 C4:3', true],
-  ['singloud', 'pop', 120, 'C4 C4 G4:2 E4 E4 C4:2 D4 D4 E4 F4 E4:2 R:1 C4 C4 G4:2 A4 A4 G4:2 F4 E4 D4 D4 C4:3', true],
-  ['heartbeat', 'pop', 114, 'E4 G4 A4 G4 E4 D4 C4:2 D4 E4 G4 E4 D4:3 R:1 E4 G4 A4 C5 A4 G4 E4:2 D4 C4 D4 E4 C4:4', true],
-];
+const SONG_DATA = SONG_LIBRARY.songs;
 const SONGS = SONG_DATA.map(([id, cat, bpm, str, orig]) => {
   const items = str.split(' ').map(tok => { const [n, d] = tok.split(':'); return { n, rest: n === 'R', beats: d ? +d : 1 }; });
   return Object.assign(items.filter(x => !x.rest), { id, cat, bpm, items, orig });
 });
-const SONG_CATS = ['kids', 'classical', 'folk', 'country', 'reggae', 'hiphop', 'urban', 'pop'];
+const SONG_CATS = SONG_LIBRARY.cats;
+// Namen en seriekoppen komen uit Song Library (songs.js)
+for (const l in LANGS) {
+  LANGS[l].song.names = SONG_LIBRARY.names[l] || {};
+  LANGS[l].song.cats = SONG_LIBRARY.catNames[l] || SONG_LIBRARY.catNames.en;
+}
 // Ritme bij het voorspelen, per achtste noot: g = gu (bas), t = tak (rand), s = slap
 const GROOVES = { reggae: '.t.t.t.t', hiphop: 'g.s.ggs.', country: 'g.t.g.t.', urban: 'g..gs..t', pop: 'g.s.g.s.' };
 const KIT = { g: 'gu', t: 'tak', s: 'slap' };
@@ -852,27 +777,46 @@ setScale = function (step) {
   songState.slots = songState.song.map(x => slotFor(midiOf(x.n) + sh, SCALES[current()]));
   songMark();
 };
-// Favorieten (ster) worden per apparaat onthouden
-const favs = new Set(store.get('favs', []));
-const isFav = (id) => favs.has(id);
-function toggleFav(id) {
-  if (favs.has(id)) favs.delete(id); else favs.add(id);
-  store.set('favs', [...favs]);
+// Sterren 1-5 onder dezelfde sleutel als Song Library; de vroegere favorieten worden 5 sterren
+const shared = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const ratings = shared.get('songlib.ratings', {});
+store.get('favs', []).forEach(id => { if (!ratings[id]) ratings[id] = 5; });
+store.set('favs', []);
+shared.set('songlib.ratings', ratings);
+const rating = (id) => ratings[id] || 0;
+const isFav = (id) => rating(id) >= 4;
+function setRating(id, n) {
+  if (rating(id) === n) delete ratings[id]; else ratings[id] = n;
+  shared.set('songlib.ratings', ratings);
   songLabels();
 }
+function ratingButtons(box, id) {
+  box.innerHTML = '';
+  for (let n = 1; n <= 5; n++) {
+    const b = document.createElement('button');
+    b.textContent = '★';
+    b.className = n <= rating(id) ? 'on' : '';
+    b.title = '★'.repeat(n);
+    b.onclick = () => { setRating(id, n); b.blur(); };
+    box.appendChild(b);
+  }
+}
 function favButton() {
-  const sg = SONGS[+songEl('songSel').value], b = songEl('songFav'), on = !!sg && isFav(sg.id);
-  b.textContent = on ? '★' : '☆';
-  b.classList.toggle('on', on);
-  b.title = on ? st().lib.unfav : st().lib.fav;
+  const sg = SONGS[+songEl('songSel').value];
+  if (sg) ratingButtons(songEl('songRate'), sg.id);
 }
 function songLabels() {
   const sel = songEl('songSel'), v = sel.value || store.get('song', 0);
   sel.innerHTML = '';
-  if (favs.size) {
+  // Bovenaan: liedjes met 4 of 5 sterren, de hoogste eerst
+  const top = SONGS.map((sg, i) => i).filter(i => isFav(SONGS[i].id)).sort((a, b) => rating(SONGS[b].id) - rating(SONGS[a].id));
+  if (top.length) {
     const g = document.createElement('optgroup');
     g.label = '★ ' + st().lib.favs;
-    SONGS.forEach((sg, i) => { if (isFav(sg.id)) g.appendChild(new Option('★ ' + songName(sg.id), i)); });
+    top.forEach(i => g.appendChild(new Option('★'.repeat(rating(SONGS[i].id)) + ' ' + songName(SONGS[i].id), i)));
     sel.appendChild(g);
   }
   SONG_CATS.forEach(cat => {
@@ -898,30 +842,29 @@ function libRender() {
   songEl('libNote').textContent = L.note;
   const chips = songEl('libChips');
   chips.innerHTML = '';
-  if (libCat === 'fav' && !favs.size) libCat = 'all';
-  ['all', ...(favs.size ? ['fav'] : []), ...SONG_CATS].forEach(cat => {
-    const n = cat === 'all' ? SONGS.length : cat === 'fav' ? favs.size : SONGS.filter(sg => sg.cat === cat).length;
+  if (libCat === 'fav') libCat = 'four';
+  const inCat = (sg, cat) => cat === 'all' || (cat === 'five' ? rating(sg.id) === 5 : cat === 'four' ? rating(sg.id) >= 4 : sg.cat === cat);
+  ['all', 'five', 'four', ...SONG_CATS].forEach(cat => {
+    const n = SONGS.filter(sg => inCat(sg, cat)).length;
     const b = document.createElement('button');
-    b.className = cat === libCat ? 'on' : '';
-    b.innerHTML = `${cat === 'all' ? L.all : cat === 'fav' ? '★ ' + L.favs : t.cats[cat]}<small>${n}</small>`;
+    b.className = (cat === libCat ? 'on ' : '') + (cat === 'five' || cat === 'four' ? 'stars' : '');
+    b.innerHTML = `${cat === 'all' ? L.all : cat === 'five' ? '★★★★★' : cat === 'four' ? '★★★★+' : t.cats[cat]}<small>${n}</small>`;
     b.onclick = () => { libCat = cat; store.set('libCat', cat); libRender(); };
     chips.appendChild(b);
   });
   const list = songEl('libList');
   list.innerHTML = '';
-  const order = SONGS.map((sg, i) => i).sort((a, b) => isFav(SONGS[b].id) - isFav(SONGS[a].id));
+  const order = SONGS.map((sg, i) => i).sort((a, b) => rating(SONGS[b].id) - rating(SONGS[a].id));
   order.forEach((i) => {
     const sg = SONGS[i];
-    if (libCat === 'fav' ? !isFav(sg.id) : libCat !== 'all' && sg.cat !== libCat) return;
+    if (!inCat(sg, libCat)) return;
     const card = document.createElement('div');
     card.className = 'song-card' + (isFav(sg.id) ? ' fav' : '');
     card.innerHTML = `<b>${songName(sg.id)}</b><span>${t.cats[sg.cat]} · ${sg.orig ? L.orig : L.pd} · ${sg.bpm} bpm</span><div class="acts"></div>`;
-    const star = document.createElement('button');
-    star.className = 'star' + (isFav(sg.id) ? ' on' : '');
-    star.textContent = isFav(sg.id) ? '★' : '☆';
-    star.title = isFav(sg.id) ? L.unfav : L.fav;
-    star.onclick = () => toggleFav(sg.id);
-    card.appendChild(star);
+    const stars = document.createElement('span');
+    stars.className = 'rating';
+    ratingButtons(stars, sg.id);
+    card.insertBefore(stars, card.querySelector('.acts'));
     const acts = card.querySelector('.acts');
     [['listen', t.listen], ['practice', t.practice]].forEach(([mode, label]) => {
       const b = document.createElement('button');
@@ -948,7 +891,6 @@ document.addEventListener('keydown', (ev) => {
   if (!(ev.target.tagName === 'BUTTON' && (ev.code === 'Enter' || ev.code === 'Space'))) ev.stopImmediatePropagation();
 }, true);
 songEl('songSel').onchange = () => { store.set('song', +songEl('songSel').value); favButton(); songStop(); songEl('songSel').blur(); };
-songEl('songFav').onclick = () => { const sg = SONGS[+songEl('songSel').value]; if (sg) toggleFav(sg.id); songEl('songFav').blur(); };
 songEl('songListen').onclick = songListen;
 songEl('songPractice').onclick = songPractice;
 songEl('songStop').onclick = () => songStop();
@@ -1031,7 +973,17 @@ requestAnimationFrame(recTick);
 langEl.onchange = () => { lang = langEl.value; store.set('lang', lang); applyLang(); langEl.blur(); };
 
 applyLang();
+// Openen vanuit Song Library: index.html?song=<id>&mode=practice|listen (op Android via de intent)
+window.openSong = function (id, mode) {
+  const i = SONGS.findIndex(sg => sg.id === id);
+  if (i < 0) return;
+  libClose();
+  songEl('songSel').value = i; store.set('song', i); favButton();
+  if (mode === 'listen') songListen(); else songPractice();
+};
+const wanted = new URLSearchParams(location.search);
+if (wanted.get('song')) openSong(wanted.get('song'), wanted.get('mode'));
 </script>
-<script src="studio.js?v=1.9"></script>
+<script src="studio.js?v=2.0"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Handpan 1.9
+# Handpan 2.0
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -53,7 +53,7 @@ To get a desktop shortcut: right-click `launch.vbs` â†’ **Send to â†’ 
 
 ## Install (Android)
 
-Download `Handpan-1.9.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-2.0.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -71,6 +71,12 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 2.0
+
+- **Songs come from [Song Library](https://github.com/rpg86x/song-library):** all 81 songs now live in the shared `songs.js`. `android/build.ps1` copies the newest version when the `song-library` folder sits next to `handpan`.
+- **1–5 star ratings** replace the single favorite star (old favorites became 5 stars). Songs with 4 or 5 stars are at the top of the song list; the library has **★★★★★** and **★★★★+** filters. Ratings use the same storage key as Song Library.
+- **Open a song from Song Library:** `index.html?song=<id>&mode=practice|listen`, or on Android via the intent extras `song` and `mode`.
 
 ## What's new in 1.9
 

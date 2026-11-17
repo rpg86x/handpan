@@ -19,7 +19,10 @@ function Check($step) { if ($LASTEXITCODE -ne 0) { throw "Mislukt: $step" } }
 
 Remove-Item -Recurse -Force $build, "$root\assets" -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force "$build\classes", "$build\dex", "$build\gen", "$root\assets", "$root\data", $out | Out-Null
-Copy-Item "$root\..\index.html", "$root\..\studio.js", "$root\..\logo.png" "$root\assets" -Force
+# Nieuwste liedjes uit Song Library meenemen (map song-library naast handpan), als die er is
+$library = "$root\..\..\song-library\songs.js"
+if (Test-Path $library) { Copy-Item $library "$root\..\songs.js" -Force }
+Copy-Item "$root\..\index.html", "$root\..\studio.js", "$root\..\songs.js", "$root\..\logo.png" "$root\assets" -Force
 
 # Starticoon in alle schermdichtheden, verkleind uit het logo van de Windows-app
 Add-Type -AssemblyName System.Drawing
