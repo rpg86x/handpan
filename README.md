@@ -1,4 +1,4 @@
-# Handpan 2.2
+# Handpan 2.3
 
 A playable handpan for Windows that works offline. Play it with your QWERTY keyboard, the mouse or a touchscreen. Every sound is synthesized live with the Web Audio API, so there are no audio files and the app needs no internet.
 
@@ -53,7 +53,7 @@ To get a desktop shortcut: right-click `launch.vbs` â†’ **Send to â†’ 
 
 ## Install (Android)
 
-Download `Handpan-2.2.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
+Download `Handpan-2.3.apk` from the [latest release](https://github.com/rpg86x/handpan/releases/latest) and open it on your tablet or phone (allow installing from unknown sources when asked). The app runs full screen; recordings are saved in **Downloads/Handpan**.
 
 To build it yourself: run `android/build.ps1` (needs the Android SDK and Android Studio's JDK; no Gradle).
 
@@ -71,6 +71,10 @@ Een bespeelbare handpan voor Windows die zonder internet werkt. Speel met je toe
 
 MIT, see [LICENSE](LICENSE).
 
+
+## What's new in 2.3
+
+- Songs from Song Library 1.4 (133 in total): Swan Lake, Morning Mood, a **Sea shanties** series and an **Early jazz & ragtime style** series, each with its own groove when you listen.
 
 ## What's new in 2.2
 
