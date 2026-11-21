@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handpan 2.5</title>
+<title>Handpan 2.6</title>
 <link rel="icon" href="logo.png">
 <style>
   :root {
     --bg1: #0e0f12; --bg2: #1d1f26; --text: #eef0f4; --muted: #9aa0ad;
     --accent: #f0b46a; --panel: rgba(255, 255, 255, .05); --line: rgba(255, 255, 255, .13);
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  .field:focus:not(:focus-visible), .ding:focus:not(:focus-visible) { outline: none; }
   html, body { height: 100%; margin: 0; }
   body {
     background: radial-gradient(ellipse at 50% 30%, var(--bg2), var(--bg1) 70%);
@@ -164,7 +165,7 @@
 </head>
 <body>
 <header>
-  <h1>Handpan 2.5</h1>
+  <h1>Handpan 2.6</h1>
   <button class="nav" id="prev">‹</button>
   <div id="scale"><div id="scaleName"></div><div id="scaleNotes"></div></div>
   <button class="nav" id="next">›</button>
@@ -206,7 +207,7 @@
   <details id="studio"><summary id="studioTitle"></summary><div id="studioBody"></div></details>
   <footer>
     <span data-t="keys"></span>
-    <span>Handpan 2.5</span>
+    <span>Handpan 2.6</span>
   </footer>
 </div></div>
 
@@ -1019,6 +1020,6 @@ window.openSong = function (id, mode) {
 const wanted = new URLSearchParams(location.search);
 if (wanted.get('song')) openSong(wanted.get('song'), wanted.get('mode'));
 </script>
-<script src="studio.js?v=2.5"></script>
+<script src="studio.js?v=2.6"></script>
 </body>
 </html>
