@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handpan 2.6</title>
+<title>Handpan 2.7</title>
 <link rel="icon" href="logo.png">
 <style>
   :root {
@@ -165,7 +165,7 @@
 </head>
 <body>
 <header>
-  <h1>Handpan 2.6</h1>
+  <h1>Handpan 2.7</h1>
   <button class="nav" id="prev">‹</button>
   <div id="scale"><div id="scaleName"></div><div id="scaleNotes"></div></div>
   <button class="nav" id="next">›</button>
@@ -207,7 +207,7 @@
   <details id="studio"><summary id="studioTitle"></summary><div id="studioBody"></div></details>
   <footer>
     <span data-t="keys"></span>
-    <span>Handpan 2.6</span>
+    <span>Handpan 2.7</span>
   </footer>
 </div></div>
 
@@ -315,12 +315,19 @@ const voices = [];
 // en gaan dan brommen/ruisen. Dan filteren we het diepe laag weg, laten de boventonen meer spreken
 // en houden we meer ruimte tot de grens. Standaard aan op smartphones, uit op tablet en laptop.
 const isPhone = () => /Android|iPhone|iPod/i.test(navigator.userAgent) && Math.min(screen.width, screen.height) < 600;
+// Android WebView loopt met zijn audioklok in grote stappen; een noot die op "nu" (currentTime) wordt
+// ingepland ligt daar vaak al in het verleden, waardoor de zachte aanzet van 6 ms wordt overgeslagen en
+// elke noot met een klik begint (hoorbaar als ruis). Daarom plannen we op Android iets vooruit.
+const LEAD = /Android/i.test(navigator.userAgent) ? .02 : 0;
+const soon = () => ctx.currentTime + LEAD;
 let phoneSpk = store.get('phoneSpk', null);
 if (phoneSpk === null) phoneSpk = isPhone();
 
 function initAudio() {
   if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
-  ctx = new AudioContext({ latencyHint: 'interactive' });
+  // Op Android geeft de kleinste buffer ('interactive') haperingen: korte gaatjes in het geluid die je
+  // als ruis/krakers hoort. Een iets grotere buffer ('playback') en een kortere galm houden het geluid heel.
+  ctx = new AudioContext({ latencyHint: LEAD ? 'playback' : 'interactive' });
   master = ctx.createGain();
   const comp = ctx.createDynamicsCompressor();
   spk = { hp1: ctx.createBiquadFilter(), hp2: ctx.createBiquadFilter(), pres: ctx.createBiquadFilter(), trim: ctx.createGain(), comp };
@@ -331,7 +338,7 @@ function initAudio() {
   bus = ctx.createGain();
   const dry = ctx.createGain(); dry.gain.value = .85;
   bus.connect(dry).connect(master);
-  const conv = ctx.createConvolver(); conv.buffer = impulse(3.2);
+  const conv = ctx.createConvolver(); conv.buffer = impulse(LEAD ? 2 : 3.2);
   wet = ctx.createGain();
   bus.connect(conv).connect(wet).connect(master);
   noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
@@ -377,7 +384,7 @@ function noiseBurst(out, t, type, f, q, amp, dur) {
 // Een handpantoon: grondtoon, octaaf en kwint daarboven (zo stemt een handpanbouwer elk veld)
 function tone(f, vel, when) {
   initAudio();
-  const t = when ?? ctx.currentTime, out = ctx.createGain(), nodes = [];
+  const t = when ?? soon(), out = ctx.createGain(), nodes = [];
   out.connect(bus);
   const dec = Math.max(2.2, Math.min(7, 6 * Math.sqrt(220 / f)));
   const bright = (.35 + vel * .9) * (.96 + Math.random() * .08);
@@ -412,7 +419,7 @@ function tone(f, vel, when) {
 
 function perc(kind, when, level = 1) {
   initAudio();
-  const t = when ?? ctx.currentTime, out = ctx.createGain();
+  const t = when ?? soon(), out = ctx.createGain();
   out.gain.value = level;
   out.connect(bus);
   setTimeout(() => out.disconnect(), Math.max(0, (t - ctx.currentTime + 1.5) * 1000));
@@ -1020,6 +1027,6 @@ window.openSong = function (id, mode) {
 const wanted = new URLSearchParams(location.search);
 if (wanted.get('song')) openSong(wanted.get('song'), wanted.get('mode'));
 </script>
-<script src="studio.js?v=2.6"></script>
+<script src="studio.js?v=2.7"></script>
 </body>
 </html>
