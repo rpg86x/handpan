@@ -4,6 +4,14 @@ A playable handpan for Windows that works offline. Play it with your QWERTY keyb
 
 ![Handpan](logo.png)
 
+## Phone or tablet?
+
+One app for phones and tablets: the same APK installs on both and adapts to the screen by itself.
+
+- **Phone:** the pan fills the screen and the *Phone speaker* mode switches on by itself, so the deep notes don't buzz on a small speaker (turn it off with headphones).
+- **Tablet:** a bigger pan with the keyboard panel and Studio below it; the phone-speaker mode is off.
+
+
 ## Scales
 
 Each scale has a ding plus 9 tone fields. Switch scales with `<` and `>`.
